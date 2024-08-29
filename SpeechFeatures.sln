@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeechFeatures", "SpeechFeatures\SpeechFeatures.csproj", "{3AB25007-1FE6-4813-9674-B18DA2E62437}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeechFeatures.Examples", "SpeechFeatures.Examples\SpeechFeatures.Examples.csproj", "{C03C204C-8B4B-4F02-8C3D-00C37426A8CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{F3D8B5FD-E19C-4BFE-930C-68216799776D}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3AB25007-1FE6-4813-9674-B18DA2E62437}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AB25007-1FE6-4813-9674-B18DA2E62437}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AB25007-1FE6-4813-9674-B18DA2E62437}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AB25007-1FE6-4813-9674-B18DA2E62437}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C03C204C-8B4B-4F02-8C3D-00C37426A8CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C03C204C-8B4B-4F02-8C3D-00C37426A8CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C03C204C-8B4B-4F02-8C3D-00C37426A8CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C03C204C-8B4B-4F02-8C3D-00C37426A8CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {522B37B9-D0C5-4722-AF1D-CE8A8B1912EB}
+	EndGlobalSection
+EndGlobal
