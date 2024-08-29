@@ -1,11 +1,10 @@
 # SpeechFeatures
 ## 介绍
-[KaldiNativeFbankSharp](https://github.com/manyeyes/KaldiNativeFbankSharp "KaldiNativeFbankSharp")是对kaldi-native-fbank的c-api接口的封装，通过dllexport方法导出共享库，可以帮助你获得语音信号的fbank特征。
-
-SpeechFeatures是一个完全用c#实现的库，其内部实现了KaldiNativeFbankSharp的所有功能。
+SpeechFeatures是一个完全用c#实现的库，其内部实现了[KaldiNativeFbankSharp](https://github.com/manyeyes/KaldiNativeFbankSharp "KaldiNativeFbankSharp")的所有功能。
+> *KaldiNativeFbankSharp是对kaldi-native-fbank的c-api接口的封装，通过dllexport方法导出共享库，可以帮助你获得语音信号的fbank特征。*
 
 ## 用途
-SpeechFeatures可在包括但不限于ASR的项目中快速计算音频特征。在c#的项目中引用SpeechFeatures，跨平台编译、AOT编译、WebAssembly编译将更加顺滑。
+SpeechFeatures可在包括但不限于ASR的项目中快速计算音频特征。在c#的项目中引用SpeechFeatures，仅用dotnet即可实现跨平台编译、AOT编译、WebAssembly编译等，操作更加顺滑。
 
 ## 调用方法
 参数参考——SpeechFeatures.OnlineFbank类的构造函数：
