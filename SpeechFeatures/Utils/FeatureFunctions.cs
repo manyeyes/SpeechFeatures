@@ -44,7 +44,7 @@ namespace SpeechFeatures.Utils
             complexFft.AddRange(p);
         }
 
-        public static void RemoveDcOffset(float[] d, int n)
+        public static void RemoveDcOffset(List<float> d, int n)
         {
             float sum = 0;
             for (int i = 0; i < n; i++)
@@ -70,7 +70,7 @@ namespace SpeechFeatures.Utils
             return sum;
         }
 
-        public static void Preemphasize(float[] d, int n, float preemphCoeff)
+        public static void Preemphasize(List<float> d, int n, float preemphCoeff)
         {
             if (preemphCoeff == 0.0f)
             {

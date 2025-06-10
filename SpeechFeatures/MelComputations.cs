@@ -6,11 +6,11 @@ namespace SpeechFeatures
 {
     public struct MelBanksOptions
     {
-        public int numBins = 23;
-        public float lowFreq = 20;
-        public float highFreq = 0;
-        public float vtlnLow = 100;
-        public float vtlnHigh = -500;
+        public int numBins = 25;
+        public float lowFreq = 20f;
+        public float highFreq = 0f;
+        public float vtlnLow = 100f;
+        public float vtlnHigh = -500f;
         public bool debugMel = false;
         public bool htkMode = false;
         public MelBanksOptions()
@@ -131,7 +131,7 @@ namespace SpeechFeatures
                     centerMel = VtlnWarpMelFreq(vtlnLow, vtlnHigh, lowFreqValue, highFreqValue, vtlnWarpFactor, centerMel);
                     rightMel = VtlnWarpMelFreq(vtlnLow, vtlnHigh, lowFreqValue, highFreqValue, vtlnWarpFactor, rightMel);
                 }
-                centerFreqs[bin]=InverseMelScale(centerMel);
+                centerFreqs[bin] = InverseMelScale(centerMel);
 
                 float[] thisBin = new float[numFftBins];
 
@@ -148,7 +148,7 @@ namespace SpeechFeatures
                             weight = (mel - leftMel) / (centerMel - leftMel);
                         else
                             weight = (rightMel - mel) / (rightMel - centerMel);
-                        thisBin[i]=weight;
+                        thisBin[i] = weight;
                         if (firstIndex == -1)
                             firstIndex = i;
                         lastIndex = i;
@@ -202,7 +202,7 @@ namespace SpeechFeatures
                 {
                     energy += v[k] * powerSpectrum[k + offset];
                 }
-                if (htkMode && energy < 1.0)
+                if (htkMode && energy < 1.0f)
                 {
                     energy = 1.0f;
                 }

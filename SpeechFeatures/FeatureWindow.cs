@@ -54,7 +54,8 @@ namespace SpeechFeatures
             }
             window = new List<float>(frameLength);
 
-            double a = 2 * Math.PI / (frameLength - 1);
+            //double a = 2 * Math.PI / (frameLength - 1);
+            double a = Math.Tau / (frameLength - 1);
             for (int i = 0; i < frameLength; i++)
             {
                 double iFl = i;
@@ -70,7 +71,7 @@ namespace SpeechFeatures
                         window.Add(0.54f - 0.46f * (float)Math.Cos(a * iFl));
                         break;
                     case "povey":
-                        window.Add((float)Math.Pow(0.5 - 0.5 * (float)Math.Cos(a * iFl), 0.85));
+                        window.Add((float)Math.Pow(0.5f - 0.5f * (float)Math.Cos(a * iFl), 0.85f));
                         break;
                     case "rectangular":
                         window.Add(1.0f);
@@ -84,7 +85,7 @@ namespace SpeechFeatures
             }
         }
 
-        public void Apply(float[] wave)
+        public void Apply(List<float> wave)
         {
             for (int k = 0; k < window.Count; k++)
             {
@@ -211,10 +212,10 @@ namespace SpeechFeatures
                     window[s] = wave[sInWave];
                 }
             }
-            ProcessWindow(opts, windowFunction, window.ToArray(), ref logEnergyPreWindow);
+            ProcessWindow(opts, windowFunction, window, ref logEnergyPreWindow);
         }
 
-        public static void ProcessWindow(FrameExtractionOptions opts, FeatureWindowFunction windowFunction, float[] window, ref float? logEnergyPreWindow)
+        public static void ProcessWindow(FrameExtractionOptions opts, FeatureWindowFunction windowFunction, List<float> window, ref float? logEnergyPreWindow)
         {
             int frameLength = opts.WindowSize();
             if (opts.RemoveDcOffset)
@@ -223,7 +224,7 @@ namespace SpeechFeatures
             }
             if (logEnergyPreWindow != null)
             {
-                float energy = Math.Max(Utils.FeatureFunctions.InnerProduct(window, window, frameLength), float.Epsilon);
+                float energy = Math.Max(Utils.FeatureFunctions.InnerProduct(window.ToArray(), window.ToArray(), frameLength), float.Epsilon);
                 logEnergyPreWindow = (float)Math.Log(energy);
             }
             if (opts.PreemphCoeff != 0.0f)
