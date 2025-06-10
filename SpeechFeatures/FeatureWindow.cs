@@ -54,8 +54,8 @@ namespace SpeechFeatures
             }
             window = new List<float>(frameLength);
 
-            //double a = 2 * Math.PI / (frameLength - 1);
-            double a = Math.Tau / (frameLength - 1);
+            double a = 2 * Math.PI / (frameLength - 1);
+            //double a = Math.Tau / (frameLength - 1);
             for (int i = 0; i < frameLength; i++)
             {
                 double iFl = i;
