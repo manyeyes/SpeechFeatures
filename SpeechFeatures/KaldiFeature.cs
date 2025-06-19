@@ -21,13 +21,13 @@ namespace SpeechFeatures
         public static FbankOptions GetFbankOptions(float dither, bool snip_edges, float sample_rate, int num_bins, float frame_shift = 10.0f, float frame_length = 25.0f, float energy_floor = 0.0f, bool debug_mel = false, string window_type = "hamming")
         {
             FbankOptions opts = new FbankOptions();
-            opts.FrameOpts.Dither = 0;
+            opts.FrameOpts.Dither = dither;
             opts.FrameOpts.SnipEdges = snip_edges;
             opts.FrameOpts.SampFreq = sample_rate;
             opts.FrameOpts.WindowType = window_type;
             opts.FrameOpts.FrameShiftMs = frame_shift;
             opts.FrameOpts.FrameLengthMs = frame_length;
-            opts.MelOpts.numBins = 80;
+            opts.MelOpts.numBins = num_bins;
             opts.MelOpts.debugMel = debug_mel;
             opts.EnergyFloor = energy_floor;
             return opts;
