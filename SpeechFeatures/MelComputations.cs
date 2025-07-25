@@ -4,19 +4,19 @@ using System.Text;
 
 namespace SpeechFeatures
 {
-    public struct MelBanksOptions
-    {
-        public int numBins = 25;
-        public float lowFreq = 20f;
-        public float highFreq = 0f;
-        public float vtlnLow = 100f;
-        public float vtlnHigh = -500f;
-        public bool debugMel = false;
-        public bool htkMode = false;
-        public MelBanksOptions()
-        {
-        }
-    }
+    //public struct MelBanksOptions
+    //{
+    //    public int numBins = 25;
+    //    public float lowFreq = 20f;
+    //    public float highFreq = 0f;
+    //    public float vtlnLow = 100f;
+    //    public float vtlnHigh = -500f;
+    //    public bool debugMel = false;
+    //    public bool htkMode = false;
+    //    public MelBanksOptions()
+    //    {
+    //    }
+    //}
 
     public class MelBanks
     {

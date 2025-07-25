@@ -49,7 +49,7 @@ internal class Program
             FrameShiftMs = 10,
             MaxFeatureVectors = 1000
         };
-        FbankOptions fbankOptions = new FbankOptions();
+        FeatureOptions fbankOptions = new FeatureOptions();
         fbankOptions.FrameOpts = opts;
         // Assuming FbankComputer implements IFeatureComputer
         var onlineFbank = new OnlineGenericBaseFeature<FbankComputer>(new FbankComputer(fbankOptions));
@@ -76,21 +76,21 @@ internal class Program
     static void test_KaldiFeature(string[]? args)
     {
         // Example usage
-        FbankOptions opts = KaldiFeature.GetFbankOptions(0, true, 16000, 80);
-        OnlineFeature onlineFbank = KaldiFeature.GetOnlineFeature(opts);
+        FeatureOptions opts = FeatureShip.GetFeatureOptions(0, true, 16000, 80);
+        IFeature onlineFeature = FeatureShip.GetOnlineFeature(opts);
 
         float[] samples = new float[400];
-        KaldiFeature.AcceptWaveform(onlineFbank, 16000, samples, 400);
+        FeatureShip.AcceptWaveform(onlineFeature, 16000, samples, 400);
 
-        KaldiFeature.InputFinished(onlineFbank);
+        FeatureShip.InputFinished(onlineFeature);
 
-        int numFramesReady = KaldiFeature.GetNumFramesReady(onlineFbank);
+        int numFramesReady = FeatureShip.GetNumFramesReady(onlineFeature);
 
-        FbankData fbankData = new FbankData();
-        KaldiFeature.GetFbank(onlineFbank, 0, ref fbankData);
+        FeatureData featureData = new FeatureData();
+        FeatureShip.GetFeature(onlineFeature, 0, ref featureData);
 
-        FbankDatas fbankDatas = new FbankDatas();
-        KaldiFeature.GetFbanks(onlineFbank, 0, ref fbankDatas);
+        FeatureDatas featureDatas = new FeatureDatas();
+        FeatureShip.GetFeatures(onlineFeature, 0, ref featureDatas);
 
         Console.WriteLine($"Number of frames ready: {numFramesReady}");
     }
