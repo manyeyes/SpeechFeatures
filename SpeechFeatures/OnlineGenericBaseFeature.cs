@@ -189,10 +189,27 @@ namespace SpeechFeatures
         void Compute(float? rawLogEnergy, float vtlnWarp, List<float> signalFrame,ref float[] feature);
     }
 
-    public class OnlineFeature : OnlineGenericBaseFeature<FbankComputer>
+    public class FbankFeature : OnlineGenericBaseFeature<FbankComputer> , IFeature
     {
-        public OnlineFeature(FbankComputer opts) : base(opts)
+        public FbankFeature(FbankComputer opts) : base(opts)
         {
         }
+    }
+
+    public class WhisperFeature : OnlineGenericBaseFeature<WhisperComputer>, IFeature
+    {
+        public WhisperFeature(WhisperComputer opts) : base(opts)
+        {
+        }
+    }
+
+    public interface IFeature
+    {
+        void AcceptWaveform(float sampleRate, float[] samples, int samplesSize);
+        void InputFinished();
+        int NumFramesReady();
+        int Dim();
+        float[] GetFrame(int index);
+        void Pop(int n);
     }
 }
