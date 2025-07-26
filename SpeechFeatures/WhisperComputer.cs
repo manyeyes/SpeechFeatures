@@ -190,12 +190,75 @@ namespace SpeechFeatures
             float[] melEnergies = new float[feature.Length - melOffset];
             // Sum with mel filter banks over the power spectrum
             melBanks.Compute(power, ref melEnergies);
+            if (melEnergies.Length > 0)
+            {
+                int cols = _opts.MelOpts.numBins;
+                int rows = 1;
+                try
+                {
+                    Convert(melEnergies, rows, cols, ref melEnergies);
+                }
+                catch (Exception ex)
+                {
+                    //"Feature conversion failed: " +ex.ToString();
+                }
+            }
             Array.Copy(melEnergies, 0, feature, melOffset, melEnergies.Length);
         }
 
         public FrameExtractionOptions GetFrameOptions()
         {
             return _opts.FrameOpts;
+        }
+
+        /// <summary>
+        /// log mel feature transformation
+        /// </summary>
+        /// <param name="features">input features</param>
+        /// <param name="rows">rows</param>
+        /// <param name="cols">cols</param>
+        /// <param name="output">output features</param>
+        public void Convert(float[] features, int rows, int cols, ref float[] output)
+        {
+            if (features == null || output == null)
+            {
+                throw new ArgumentNullException("输入或输出数组不能为null");
+            }
+            if (rows <= 0 || cols <= 0)
+            {
+                throw new ArgumentOutOfRangeException("行数和列数必须为正数");
+            }
+            int total = rows * cols;
+            if (features.Length < total)
+            {
+                throw new ArgumentException("输入特征数组长度不足");
+            }
+            if (output.Length < total)
+            {
+                throw new ArgumentException("输出数组长度不足");
+            }
+            // 1.calculate log10 (clip (features, 1e-10)) while tracking the maximum value
+            float maxVal = -1e20f;
+            for (int i = 0; i < total; ++i)
+            {
+                float val = Math.Max(features[i], 1e-10f);
+                output[i] = (float)Math.Log10(val);
+                if (output[i] > maxVal)
+                {
+                    maxVal = output[i];
+                }
+            }
+            // 2.application threshold (max (log_stec, maxVal -8.0))
+            float threshold = maxVal - 8.0f;
+            for (int i = 0; i < total; ++i)
+            {
+                output[i] = Math.Max(output[i], threshold);
+            }
+            // 3.normalization (log_stec+4.0)/4.0
+            for (int i = 0; i < total; ++i)
+            {
+                output[i] = (output[i] + 4.0f) * 0.25f;
+            }
         }
     }
 
