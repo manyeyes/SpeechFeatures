@@ -1,12 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-			<TargetFrameworks>net472;net48;netstandard2.1;netcoreapp3.1;net6.0;net7.0;net8.0;net9.0;net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
-			<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
-			<LangVersion>10</LangVersion>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
+		<PropertyGroup>
+				<TargetFrameworks>net45;net461;net472;net48;netstandard2.0;netstandard2.1;netcoreapp2.1.30;netcoreapp3.1;net6.0;net7.0;net8.0;net9.0;net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+				<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+				<LangVersion>10</LangVersion>
+				<ImplicitUsings>enable</ImplicitUsings>
+				<Nullable>enable</Nullable>
+				<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+				<!-- info -->
+				<PackageId>ManySpeech.SpeechFeatures</PackageId>
+				<Version>1.1.7</Version>
+				<Authors>manyeyes</Authors>
+				<Summary>SpeechFeatures is a library implemented in C# that can quickly compute audio features, and is commonly used in scenarios such as speech signal processing.</Summary>
+				<Description>SpeechFeatures is an audio feature computation library implemented in C# that can quickly extract various audio features, widely used in scenarios such as speech signal processing. This library offers excellent compatibility in terms of framework adaptation, supporting multiple environments including .NET 4.5+, .NET 6.0+, .NET Core 3.1, and .NET Standard 2.0+. It enables cross-platform compilation, AOT compilation, and WebAssembly compilation, among other capabilities. Its core functionalities include computing mainstream speech features like kaldi fbank and whisper feature, providing efficient support for speech processing-related tasks.</Description>
+				<Copyright>copyright@2024 manyeyes</Copyright>
+				<PackageProjectUrl>https://github.com/manyeyes/SpeechFeatures</PackageProjectUrl>
+				<RepositoryUrl>https://github.com/manyeyes/SpeechFeatures</RepositoryUrl>
+				<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+				<IncludeSymbols>true</IncludeSymbols>
+				<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+				<Nullable>enable</Nullable>
+				<LangVersion>latest</LangVersion>
+				<PackageReadmeFile>App_Readme/README.EN.md</PackageReadmeFile>
+				<PackageLicenseFile>App_Readme/LICENSE</PackageLicenseFile>
+				<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		</PropertyGroup>
+
+		<ItemGroup>
+				<None Include="..\README.md" Pack="true" PackagePath="App_Readme/" Visible="false" />
+				<None Include="..\README.EN.md" Pack="true" PackagePath="App_Readme/" Visible="false" />
+				<None Include="..\LICENSE" Pack="true" PackagePath="App_Readme/" Visible="false" />
+		</ItemGroup>
 
 </Project>

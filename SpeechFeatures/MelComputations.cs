@@ -18,10 +18,16 @@ namespace SpeechFeatures
     //    }
     //}
 
+
     public class MelBanks
     {
         private float[] centerFreqs;
+#if NET471_OR_GREATER || NET6_0_OR_GREATER
         private (int, List<float>)[] bins;
+        //private Tuple<int, List<float>>[] bins;
+#else 
+        private BinItem[] bins;
+#endif
         private bool debug;
         private bool htkMode;
 
@@ -116,8 +122,12 @@ namespace SpeechFeatures
 
             if (vtlnWarpFactor != 1.0f && (vtlnLow < 0.0f || vtlnLow <= lowFreqValue || vtlnLow >= highFreqValue || vtlnHigh <= 0.0f || vtlnHigh >= highFreqValue || vtlnHigh <= vtlnLow))
                 throw new Exception($"Bad values in options: vtln-low {vtlnLow} and vtln-high {vtlnHigh}, versus low-freq {lowFreqValue} and high-freq {highFreqValue}");
-
+#if NET471_OR_GREATER || NET6_0_OR_GREATER
             bins = new (int, List<float>)[numBins];
+            //bins = new Tuple<int, List<float>>[numBins];
+#else
+            bins = new BinItem[numBins];
+#endif
             centerFreqs = new float[numBins];
             for (int bin = 0; bin < numBins; bin++)
             {

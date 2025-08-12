@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeechFeatures.Examples", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{F3D8B5FD-E19C-4BFE-930C-68216799776D}"
 	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.EN.md = README.EN.md
 		README.md = README.md
 	EndProjectSection
 EndProject
