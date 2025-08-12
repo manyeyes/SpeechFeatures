@@ -28,13 +28,27 @@ namespace SpeechFeatures
             return $"num_bins: {numBins}\nlow_freq: {lowFreq}\nhigh_freq: {highFreq}\nvtln_low: {vtlnLow}\nvtln_high: {vtlnHigh}\ndebug_mel: {debugMel}\nhtk_mode: {htkMode}\n";
         }
     }
+    public class BinItem
+    {
+        public int Item1 { get; set; }
+        public List<float> Item2 { get; set; }
+        public BinItem(int key, List<float> values)
+        {
+            Item1 = key;
+            Item2 = values;
+        }
+    }
     /// <summary>
     /// 梅尔滤波器组实现
     /// </summary>
     public class MelBanks2
     {
+#if NET471_OR_GREATER || NET6_0_OR_GREATER
         // 存储每个梅尔 bin 的起始索引和权重（对应C++的std::vector<std::pair<int32_t, std::vector<float>>>）
         private List<Tuple<int, List<float>>> _bins = new List<Tuple<int, List<float>>>();
+#else
+        private List<BinItem> _bins=new List<BinItem>();
+#endif
         private bool _debug;
         private bool _htkMode;
 
@@ -117,8 +131,11 @@ namespace SpeechFeatures
         {
             _debug = false;
             _htkMode = false;
-
+#if NET471_OR_GREATER || NET6_0_OR_GREATER
             _bins = new List<Tuple<int, List<float>>>();
+#else
+            _bins = new List<BinItem>();
+#endif
             for (int bin = 0; bin < numRows; bin++)
             {
                 int startIdx = bin * numCols;
@@ -143,8 +160,11 @@ namespace SpeechFeatures
                 List<float> binWeights = new List<float>();
                 for (int i = firstIndex; i <= lastIndex; i++)
                     binWeights.Add(weights[startIdx + i]);
-
+#if NET471_OR_GREATER || NET6_0_OR_GREATER
                 _bins.Add(Tuple.Create(firstIndex, binWeights));
+#else
+                _bins.Add(new BinItem(firstIndex, binWeights));
+#endif
             }
         }
 
@@ -183,7 +203,11 @@ namespace SpeechFeatures
                 throw new ArgumentException($"Invalid VTLN parameters for warping", nameof(opts));
 
             // 计算每个梅尔bin的权重
+#if NET471_OR_GREATER || NET6_0_OR_GREATER
             _bins = new List<Tuple<int, List<float>>>();
+#else
+            _bins = new List<BinItem>();
+#endif
             for (int bin = 0; bin < numBins; bin++)
             {
                 // 计算梅尔频率范围
@@ -229,7 +253,11 @@ namespace SpeechFeatures
                 if (opts.htkMode && bin == 0 && melLow != 0)
                     weights[0] = 0.0f;
 
+#if NET471_OR_GREATER || NET6_0_OR_GREATER
                 _bins.Add(Tuple.Create(firstIndex, weights));
+#else
+                _bins.Add(new BinItem(firstIndex, weights));
+#endif
             }
 
             // 调试输出
@@ -268,7 +296,11 @@ namespace SpeechFeatures
             float melHigh = useSlaney ? MelScaleSlaney(highFreq) : MelScale(highFreq);
             float melDelta = (melHigh - melLow) / (numBins + 1);
 
+#if NET471_OR_GREATER || NET6_0_OR_GREATER
             _bins = new List<Tuple<int, List<float>>>();
+#else
+            _bins = new List<BinItem>();
+#endif
             for (int bin = 0; bin < numBins; bin++)
             {
                 // 计算梅尔频率范围
@@ -320,7 +352,11 @@ namespace SpeechFeatures
                 if (firstIndex == -1 || lastIndex < firstIndex)
                     throw new InvalidOperationException("Insufficient FFT bins for mel bin (num_bins may be too large)");
 
+#if NET471_OR_GREATER || NET6_0_OR_GREATER
                 _bins.Add(Tuple.Create(firstIndex, weights));
+#else
+                _bins.Add(new BinItem(firstIndex, weights));
+#endif
             }
 
             // 调试输出
@@ -340,7 +376,12 @@ namespace SpeechFeatures
 
             for (int i = 0; i < _bins.Count; i++)
             {
+#if NET471_OR_GREATER || NET6_0_OR_GREATER
                 var (offset, weights) = _bins[i];
+#else
+                var offset=_bins[i].Item1;
+                var weights=_bins[i].Item2;
+#endif
                 float energy = 0;
 
                 for (int k = 0; k < weights.Count; k++)
@@ -382,7 +423,12 @@ namespace SpeechFeatures
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < _bins.Count; i++)
             {
+#if NET471_OR_GREATER || NET6_0_OR_GREATER
                 var (offset, weights) = _bins[i];
+#else
+                var offset=_bins[i].Item1;
+                var weights=_bins[i].Item2;
+#endif
                 sb.AppendLine($"Bin {i}, Offset: {offset}, Weights: {string.Join(", ", weights.Select(w => w.ToString("F4")))}");
             }
             System.Diagnostics.Debug.WriteLine(sb.ToString());
