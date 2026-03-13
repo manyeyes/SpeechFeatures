@@ -65,7 +65,7 @@ namespace SpeechFeatures
     {
         private static object mutex = new object();
 
-        public static FeatureOptions GetFeatureOptions(float dither, bool snip_edges, float sample_rate, int num_bins, float frame_shift = 10.0f, float frame_length = 25.0f, float energy_floor = 0.0f, bool debug_mel = false, string window_type = "hamming")//(float dither, bool snip_edges, float sample_rate, int num_bins, float frame_shift, float frame_length, float energy_floor, bool debug_mel, string window_type)
+        public static FeatureOptions GetFeatureOptions(float dither, bool snip_edges, float sample_rate, int num_bins, float frame_shift = 10.0f, float frame_length = 25.0f, float energy_floor = 0.0f, bool debug_mel = false, bool is_librosa = false, bool htk_mode = false, float low_freq = 20f, float high_freq = 0f, string norm = "slaney", bool remove_dc_offset = true, float preemph_coeff = 0.97f, string window_type = "hamming", bool use_log_fbank = true)//(float dither, bool snip_edges, float sample_rate, int num_bins, float frame_shift, float frame_length, float energy_floor, bool debug_mel, string window_type)
         {
             FeatureOptions opts = new FeatureOptions();
             opts.FrameOpts.Dither = dither;
@@ -74,9 +74,17 @@ namespace SpeechFeatures
             opts.FrameOpts.WindowType = window_type;
             opts.FrameOpts.FrameShiftMs = frame_shift;
             opts.FrameOpts.FrameLengthMs = frame_length;
+            opts.FrameOpts.RemoveDcOffset = remove_dc_offset;
+            opts.FrameOpts.PreemphCoeff = preemph_coeff;
             opts.MelOpts.numBins = num_bins;
             opts.MelOpts.debugMel = debug_mel;
+            opts.MelOpts.isLibrosa = is_librosa;
+            opts.MelOpts.htkMode = htk_mode;
+            opts.MelOpts.lowFreq = low_freq;
+            opts.MelOpts.highFreq = high_freq;
+            opts.MelOpts.norm = norm;
             opts.EnergyFloor = energy_floor;
+            opts.UseLogFbank= use_log_fbank;
             return opts;
         }
 

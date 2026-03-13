@@ -9,10 +9,10 @@ namespace SpeechFeatures
     public struct MelBanksOptions
     {
         public int numBins = 25;
-        public float lowFreq = 20;
-        public float highFreq = 0;
-        public float vtlnLow = 100;
-        public float vtlnHigh = -500;
+        public float lowFreq = 20f;
+        public float highFreq = 0f;
+        public float vtlnLow = 100f;
+        public float vtlnHigh = -500f;
         public bool debugMel = false;
         public bool htkMode = false;
         public bool isLibrosa = false;
@@ -47,7 +47,7 @@ namespace SpeechFeatures
         // 存储每个梅尔 bin 的起始索引和权重（对应C++的std::vector<std::pair<int32_t, std::vector<float>>>）
         private List<Tuple<int, List<float>>> _bins = new List<Tuple<int, List<float>>>();
 #else
-        private List<BinItem> _bins=new List<BinItem>();
+        private List<BinItem> _bins = new List<BinItem>();
 #endif
         private bool _debug;
         private bool _htkMode;
@@ -365,7 +365,7 @@ namespace SpeechFeatures
         }
 
         // 计算梅尔能量
-        public void Compute(float[] powerSpectrum,ref float[] melEnergiesOut)
+        public void Compute(float[] powerSpectrum, ref float[] melEnergiesOut)
         {
             if (powerSpectrum == null)
                 throw new ArgumentNullException(nameof(powerSpectrum));
@@ -379,8 +379,8 @@ namespace SpeechFeatures
 #if NET471_OR_GREATER || NET6_0_OR_GREATER
                 var (offset, weights) = _bins[i];
 #else
-                var offset=_bins[i].Item1;
-                var weights=_bins[i].Item2;
+                var offset = _bins[i].Item1;
+                var weights = _bins[i].Item2;
 #endif
                 float energy = 0;
 
@@ -426,8 +426,8 @@ namespace SpeechFeatures
 #if NET471_OR_GREATER || NET6_0_OR_GREATER
                 var (offset, weights) = _bins[i];
 #else
-                var offset=_bins[i].Item1;
-                var weights=_bins[i].Item2;
+                var offset = _bins[i].Item1;
+                var weights = _bins[i].Item2;
 #endif
                 sb.AppendLine($"Bin {i}, Offset: {offset}, Weights: {string.Join(", ", weights.Select(w => w.ToString("F4")))}");
             }

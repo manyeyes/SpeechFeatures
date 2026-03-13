@@ -11,7 +11,7 @@ namespace SpeechFeatures
         private float _sample_rate = 16000.0F;
         private int _num_bins = 80;
         private int _last_frame_index = 0;
-
+        
         /// <summary>
         /// OnlineFbank
         /// </summary>
@@ -23,9 +23,17 @@ namespace SpeechFeatures
         /// <param name="frame_length"></param>
         /// <param name="energy_floor"></param>
         /// <param name="debug_mel"></param>
+        /// <param name="is_librosa"></param>
+        /// <param name="htk_mode"></param>
+        /// <param name="low_freq"></param>
+        /// <param name="high_freq"></param>
+        /// <param name="norm"></param>
+        /// <param name="remove_dc_offset"></param>
+        /// <param name="preemph_coeff"></param>
         /// <param name="window_type">window_type (string): Type of window ('hamming'|'hanning'|'povey'|'rectangular'|'blackman')</param>
+        /// <param name="use_log_fbank"></param>
         /// <param name="feature_type">feature_type (string): Type of feature ('whisper'|'fbank')</param>
-        public OnlineFbank(float dither, bool snip_edges, float sample_rate, int num_bins, float frame_shift = 10.0f, float frame_length = 25.0f, float energy_floor = 0.0f, bool debug_mel = false, string window_type = "hamming", string feature_type = "fbank")
+        public OnlineFbank(float dither, bool snip_edges, float sample_rate, int num_bins, float frame_shift = 10.0f, float frame_length = 25.0f, float energy_floor = 0.0f, bool debug_mel = false, bool is_librosa = false, bool htk_mode = false, float low_freq = 20f, float high_freq = 0f, string norm = "slaney", bool remove_dc_offset = true, float preemph_coeff = 0.97f, string window_type = "hamming", bool use_log_fbank = true, string feature_type = "fbank")
         {
             _sample_rate = sample_rate;
             _num_bins = num_bins;
@@ -38,7 +46,15 @@ namespace SpeechFeatures
                  frame_length: frame_length,
                  energy_floor: energy_floor,
                  debug_mel: debug_mel,
-                 window_type: window_type
+                 is_librosa: is_librosa,
+                 htk_mode: htk_mode,
+                 low_freq: low_freq,
+                 high_freq: high_freq,
+                 norm: norm,
+                 remove_dc_offset: remove_dc_offset,
+                 preemph_coeff: preemph_coeff,
+                 window_type: window_type,
+                 use_log_fbank: use_log_fbank
                  );
             this._feature = FeatureShip.GetOnlineFeature(this._opts, featureType: feature_type);
         }
